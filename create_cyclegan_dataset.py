@@ -5,7 +5,7 @@ import random
 
 import click
 
-from . import cyclegan_datasets
+import cyclegan_datasets
 
 
 def create_list(foldername, fulldir=True, suffix=".jpg"):
@@ -50,6 +50,7 @@ def create_list(foldername, fulldir=True, suffix=".jpg"):
               help='Whether to shuffle images when creating the dataset.')
 def create_dataset(image_path_a, image_path_b,
                    dataset_name, do_shuffle):
+    print cyclegan_datasets.DATASET_TO_IMAGETYPE, dataset_name
     list_a = create_list(image_path_a, True,
                          cyclegan_datasets.DATASET_TO_IMAGETYPE[dataset_name])
     list_b = create_list(image_path_b, True,

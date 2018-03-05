@@ -2,10 +2,10 @@
   "description": "The official PyTorch version of CycleGAN.", 
   "pool_size": 50,
   "base_lr":0.0002,
-  "max_step": 200,
+  "max_step": 500,
   "network_version": "pytorch",
-  "dataset_name": "fakeCreditcards_train",
-  "do_flipping": 1,
+  "dataset_name": "fake_train",
+  "do_flipping": 0,
   "_LAMBDA_A": 10,
   "_LAMBDA_B": 10
 }

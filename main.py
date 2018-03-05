@@ -9,8 +9,8 @@ from scipy.misc import imsave
 import click
 import tensorflow as tf
 
-from . import cyclegan_datasets
-from . import data_loader, losses, model
+import cyclegan_datasets
+import data_loader, losses, model
 
 slim = tf.contrib.slim
 
@@ -30,7 +30,7 @@ class CycleGAN:
         self._lambda_b = lambda_b
         self._output_dir = os.path.join(output_root_dir, current_time)
         self._images_dir = os.path.join(self._output_dir, 'imgs')
-        self._num_imgs_to_save = 20
+        self._num_imgs_to_save = 2
         self._to_restore = to_restore
         self._base_lr = base_lr
         self._max_step = max_step
@@ -145,8 +145,8 @@ class CycleGAN:
         g_loss_A = \
             cycle_consistency_loss_a + cycle_consistency_loss_b + lsgan_loss_b
         g_loss_B = \
-            cycle_consistency_loss_b + cycle_consistency_loss_a + lsgan_loss_a
-
+            cycle_consistency_loss_b + cycle_consistency_loss_a + lsgan_loss_a        
+        
         d_loss_A = losses.lsgan_loss_discriminator(
             prob_real_is_real=self.prob_real_a_is_real,
             prob_fake_is_real=self.prob_fake_pool_a_is_real,
@@ -156,6 +156,7 @@ class CycleGAN:
             prob_fake_is_real=self.prob_fake_pool_b_is_real,
         )
 
+        print g_loss_A, g_loss_B
         optimizer = tf.train.AdamOptimizer(self.learning_rate, beta1=0.5)
 
         self.model_vars = tf.trainable_variables()
@@ -178,6 +179,7 @@ class CycleGAN:
         self.g_B_loss_summ = tf.summary.scalar("g_B_loss", g_loss_B)
         self.d_A_loss_summ = tf.summary.scalar("d_A_loss", d_loss_A)
         self.d_B_loss_summ = tf.summary.scalar("d_B_loss", d_loss_B)
+
 
     def save_images(self, sess, epoch):
         """
@@ -312,6 +314,7 @@ class CycleGAN:
                             self.learning_rate: curr_lr
                         }
                     )
+                    print self.g_A_loss_summ
                     writer.add_summary(summary_str, epoch * max_images + i)
 
                     fake_B_temp1 = self.fake_image_pool(
@@ -344,6 +347,7 @@ class CycleGAN:
                             self.learning_rate: curr_lr
                         }
                     )
+                    print self.g_B_loss_summ
                     writer.add_summary(summary_str, epoch * max_images + i)
 
                     fake_A_temp1 = self.fake_image_pool(
