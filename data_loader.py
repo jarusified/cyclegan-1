@@ -58,9 +58,9 @@ def load_data(dataset_name, image_size_before_crop,
 
     # Preprocessing:
     inputs['image_i'] = tf.image.resize_images(
-        inputs['image_i'], [image_size_before_crop, image_size_before_crop])
+        inputs['image_i'], [image_size_before_crop, image_size_before_crop], method=ResizeMethod.BILINEAR)
     inputs['image_j'] = tf.image.resize_images(
-        inputs['image_j'], [image_size_before_crop, image_size_before_crop])
+        inputs['image_j'], [image_size_before_crop, image_size_before_crop], method=ResizeMethod.BILINEAR)
 
     if do_flipping is True:
         inputs['image_i'] = tf.image.random_flip_left_right(inputs['image_i'])

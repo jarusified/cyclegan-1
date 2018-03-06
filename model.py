@@ -100,7 +100,7 @@ def build_generator_resnet_9blocks_tf(inputgen, name="generator", skip=False):
     with tf.variable_scope(name):
         f = 7
         ks = 3
-        padding = "REFLECT"
+        padding = "SYMMETRIC"
 
         pad_input = tf.pad(inputgen, [[0, 0], [ks, ks], [
             ks, ks], [0, 0]], padding)
