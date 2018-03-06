@@ -28,9 +28,9 @@ class CycleGAN:
         self._size_before_crop = 286
         self._lambda_a = lambda_a
         self._lambda_b = lambda_b
-        self._output_dir = os.path.join(output_root_dir, current_tim
+        self._output_dir = os.path.join(output_root_dir, current_time)
         self._images_dir = os.path.join(self._output_dir, 'imgs')
-        self._num_imgs_to_save = 2
+        self._num_imgs_to_save = 1
         self._to_restore = to_restore
         self._base_lr = base_lr
         self._max_step = max_step
@@ -48,7 +48,6 @@ class CycleGAN:
             (self._pool_size, 1, model.IMG_HEIGHT, model.IMG_WIDTH,
              model.IMG_CHANNELS)
         )
-        print self.fake_images_A, self.fake_images_B
 
     def model_setup(self):
         """
